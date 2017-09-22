@@ -20,7 +20,7 @@ const channel = member.guild.channels.find('name', 't-bot-welcomes');
 
 function setGame() {
     var games = [
-        +prefix+"help",
+        "tb-help",
 		"the waiting game",
 		"Annoying Tyson",
 		"being unbreakable"
