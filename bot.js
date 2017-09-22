@@ -4,10 +4,6 @@ const config = require('./config.json');
    
 var prefix = "tbot:";
 var ver = "0.2";
-
-client.on('ready', () => {
-       console.log("[SUCCESS] TBot is now ready! Running version "+ ver +"!");
-   });
    
 client.on('guildMemberAdd', member => {
 const channel = member.guild.channels.find('name', 't-bot-welcomes');
@@ -15,8 +11,33 @@ const channel = member.guild.channels.find('name', 't-bot-welcomes');
 		message.send(`Welcome to the server hope you have a great time and make sure to read #information or #rules whatever server your on and enjoy your time at this awesome server have fun, ${member}`);
 })
 
+function setGame() {
+    var games = [
+        "tbot:help",
+		"the waiting game",
+		"Annoying Tyson",
+		"being unbreakable"
+    ]
+
+    client.user.setPresence({
+        status: 'online',
+        afk: false,
+        game: {
+            type: 0,
+            name: games[Math.floor(Math.random() * games.length)]
+        }
+    })
+}
+
+client.on('ready', () => {
+       console.log("[SUCCESS] TBot is now ready! Running version "+ ver +"!");
+	   setGame();
+	   client.setInterval(setGame, 200000);
+   });
+
 client.on("message", function(message){
 	
+	if (message.channel.type === "dm") return;
 	let command = message.content.split(" ")[0];
 	command = command.slice(prefix.length);
 	let args = message.content.split(" ").slice(1);
