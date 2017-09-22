@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const config = require('./config.json');
    
-var prefix = "tbot:";
+var prefix = "tb-";
 var ver = "0.2";
    
 client.on('guildMemberAdd', member => {
@@ -11,9 +11,16 @@ const channel = member.guild.channels.find('name', 't-bot-welcomes');
 		message.send(`Welcome to the server hope you have a great time and make sure to read #information or #rules whatever server your on and enjoy your time at this awesome server have fun, ${member}`);
 })
 
+client.on('guildMemberAdd', member => {
+const channel = member.guild.channels.find('name', 't-bot-welcomes');
+		if (!channel) return;
+		message.send(`**${member}** just left the server...`);
+})
+
+
 function setGame() {
     var games = [
-        "tbot:help",
+        +prefix+"help",
 		"the waiting game",
 		"Annoying Tyson",
 		"being unbreakable"
@@ -46,7 +53,7 @@ client.on("message", function(message){
 		var embed = new Discord.RichEmbed()
 		.setAuthor("Commands for TBot " + ver, "https://images-ext-2.discordapp.net/external/KLnOX8cIR8Fe6aRozJDuwtMC4NQttUMJu3MQRy2nTvM/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/354594001736957954/b7259f4a3009c964cae30157176bc2ac.png?width=250&height=250")
         .setDescription("My prefix is "+ prefix)
-		.addField("Disclaimer:", "Please note that TBot is currently in bare if you want to help us type in tbot:git")
+		.addField("Disclaimer:", "Please note that TBot is currently bare if you want to help us type in tb-git")
 		.addField("- General Commands", "ping, git", true)
 		.addField("- Information", "info", true)
 		.setColor("#03ffee")
