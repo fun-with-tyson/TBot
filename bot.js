@@ -43,8 +43,9 @@ client.on('ready', () => {
    });
 
 client.on("message", function(message){
-	
-	if (message.channel.type === "dm") return;
+    if (message.author.bot) return;
+    if (message.channel.type === "dm") return;
+    if (message.content.indexOf(config.prefix) !== 0) return;
 	let command = message.content.split(" ")[0];
 	command = command.slice(prefix.length);
 	let args = message.content.split(" ").slice(1);
