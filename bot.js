@@ -55,7 +55,7 @@ client.on("message", function(message){
 		.setAuthor("Commands for TBot " + ver, "https://images-ext-2.discordapp.net/external/KLnOX8cIR8Fe6aRozJDuwtMC4NQttUMJu3MQRy2nTvM/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/354594001736957954/b7259f4a3009c964cae30157176bc2ac.png?width=250&height=250")
         .setDescription("My prefix is "+ prefix)
 		.addField("Disclaimer:", "Please note that TBot is currently bare if you want to help us type in tb-git")
-		.addField("- General Commands", "ping, git", true)
+		.addField("- General Commands", "ping, git, avatar", true)
 		.addField("- Information", "info", true)
 		.setColor("#03ffee")
 	    .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL)
@@ -75,7 +75,7 @@ client.on("message", function(message){
 		 var embed = new Discord.RichEmbed()
 		.setAuthor("Information", "https://images-ext-2.discordapp.net/external/KLnOX8cIR8Fe6aRozJDuwtMC4NQttUMJu3MQRy2nTvM/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/354594001736957954/b7259f4a3009c964cae30157176bc2ac.png?width=250&height=250")
         .setDescription("This information command will tell you all the information you need about TBot")
-        .addField("Bot Creators/Helpers", "Alee14-Converting AleeBot 0.0.6's code to TBot\nTyson-Making and developng the Bot")
+        .addField("Bot Creators/Helpers", "Tyson-Making and developng the Bot")
         .addField("Why was this bot made and when was this bot made", "This bot was made on the 21th of September 2017 the bot was made because i have always wanted to code a great standing public bot and becuase i love coding discord bots and thank Alee for remaking it from AleeBot\'s 0.0.6 code base and he gave me permission to use it.")
 		message.channel.sendEmbed(embed);
 	}
@@ -91,6 +91,21 @@ client.on("message", function(message){
 		message.channel.sendMessage(args.join(" "));
 		message.delete();
 		}
+	}
+	if(command === 'avatar'){
+		 if (message.mentions.users.first()) {
+            	var mentionmembers = message.mentions.members.first()
+            	var mentionusers = message.mentions.users.first()
+            	var embed = new Discord.RichEmbed()
+                    .setImage(mentionusers.displayAvatarURL)
+					.setColor("#03ffee")
+            	message.channel.send({embed})
+            } else {
+                var embed = new Discord.RichEmbed()
+                    .setImage(message.author.displayAvatarURL)
+					.setColor("#03ffee")
+                message.channel.send({embed})
+            }
 	}
 	
 	
