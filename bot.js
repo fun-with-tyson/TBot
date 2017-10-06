@@ -76,7 +76,7 @@ client.on("message", function(message){
 		.setAuthor("Information", "https://images-ext-2.discordapp.net/external/KLnOX8cIR8Fe6aRozJDuwtMC4NQttUMJu3MQRy2nTvM/%3Fsize%3D2048/https/cdn.discordapp.com/avatars/354594001736957954/b7259f4a3009c964cae30157176bc2ac.png?width=250&height=250")
         .setDescription("This information command will tell you all the information you need about TBot")
         .addField("Bot Creators/Helpers", "Tyson-Making and developng the Bot")
-        .addField("Why was this bot made and when was this bot made", "This bot was made on the 21th of September 2017 the bot was made because i have always wanted to code a great standing public bot and becuase i love coding discord bots and thank Alee for remaking it from AleeBot\'s 0.0.6 code base and he gave me permission to use it.")
+        .addField("Why was this bot made and when was this bot made", "This bot was made on the 21th of September 2017 the bot was made because i have always wanted to code a great standing public bot and becuase i love coding discord bots.")
 		message.channel.sendEmbed(embed);
 	}
 	
