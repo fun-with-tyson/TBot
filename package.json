@@ -1,16 +1,16 @@
 {
   "name": "tbot",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.4.0",
+  "description": "A bot that's written on discord.js",
   "main": "bot.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node bot"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fun-with-tyson/TBot.git"
   },
-  "author": "Tyson and Alee14",
+  "author": "Tyson, Alee14 and CrypticDisturbance",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fun-with-tyson/TBot/issues"
