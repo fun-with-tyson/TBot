@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
-const client = new Discord.Client();
-const config = require('./config.json');
+const client = new Discord.Client()
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 var prefix = "tb-";
 var ver = "0.2";
@@ -13,6 +13,9 @@ var prefix = "tbt-";
 var ver = "0.3";
 
 client.on('guildMemberAdd', member => {
+=======
+ client.on('guildMemberAdd', member => {
+>>>>>>> 5108b79b631b11d98db8f5a6a346994fb77d119d
 	const channel = member.guild.channels.find('name', 'welcomes-and-byes');
 >>>>>>> 77b18bd282cbaa74f3f3bccc042c759e73db5cda
 	if (!channel) return;
@@ -28,26 +31,24 @@ client.on('guildMemberAdd', member => {
 	if (!channel) return;
 	message.send(`**${member}** just left the server...`);
 })
-
-
+ // Bot user status
 function setGame() {
-	var games = [
-		"tb-help",
-		"the waiting game",
-		"Annoying Tyson",
-		"being unbreakable"
-	]
+    var games = [
+      `${prefix}help | ${client.guilds.size} Servers!`,
+	 "Beta Testing Only"
+    ]
 
-	client.user.setPresence({
-		status: 'online',
-		afk: false,
-		game: {
-			type: 0,
-			name: games[Math.floor(Math.random() * games.length)]
-		}
-	})
+    client.user.setPresence({
+        status: 'online',
+        afk: false,
+        game: {
+            type: 0,
+            name: games[Math.floor(Math.random() * games.length)]
+        }
+    })
 }
 
+<<<<<<< HEAD
 client.on('ready', () => {
 	console.log("[SUCCESS] TBot is now ready! Running version " + ver + "!");
 	setGame();
@@ -117,81 +118,38 @@ client.on("message", function (message) {
 			.addField("Why was this bot made and when was this bot made?", "This bot was made on the 21th of September 2017.\nThe bot was made because I have always had a passion to code a great standing public bot; thus I made TBot.")
 		message.channel.sendEmbed(embed);
 	}
+=======
+var prefix = "tbot;"
+var ver =  "0.1"
 
-	if (command === 'git') {
-		message.reply('Want to help contribute to the development of TBot? Here is the link: https://github.com/fun-with-tyson/TBot. Get coding!')
-	}
+client.login("Token");
+>>>>>>> 5108b79b631b11d98db8f5a6a346994fb77d119d
 
-	if (command === 'say') {
-		if (message.author.id !== config.ownerID)
-			message.reply(":no_entry: **NOPE!** Sorry buddy, but Tyson is only allow to use this command.")
-		else {
-			message.channel.sendMessage(args.join(" "));
-			message.delete();
-		}
-	}
-	if (command === 'avatar') {
-		if (message.mentions.users.first()) {
-			var mentionmembers = message.mentions.members.first()
-			var mentionusers = message.mentions.users.first()
-			var embed = new Discord.RichEmbed()
-				.setImage(mentionusers.displayAvatarURL)
-				.setColor("#03ffee")
-			message.channel.send({ embed })
-		} else {
-			var embed = new Discord.RichEmbed()
-				.setImage(message.author.displayAvatarURL)
-				.setColor("#03ffee")
-			message.channel.send({ embed })
-		}
+// Bot ready
+client.on("ready", () => {
+    console.log(`=======================================\n`,
+                 `Total Guilds   | ${client.guilds.size}\n`,
+                `=======================================\n`);
+    
+    setGame();
+    client.setInterval(setGame, 10000);
+})
 
-	}
+client.on("message", function(message) {
+    
+    if (!message.guild) return;
 
-	if (command === "suggest") {
-		try {
-			var title;
-			var body;
-			var icon = message.author.avatar;
-			message.author.createDM(`:wave: Welcome to the TBot suggestion system! This is an easy to suggest things that you want to improve `
-				+ `in ${message.guild.name}. The following information *will be recorded.*\n- Your username and discriminator.\n- Time and date of suggestion.n\nIf you do not agree with this, please type ` + "`n` now. Otherwise, please enter `y` to continue.");
-			switch (message.content) {
-				default:
-					message.author.send("Invalid option. Try again.");
-					break;
-				case "y":
-					message.author.send("Okay. Please enter the title of the suggestion.");
-					title = message.content;
-					if (title != null) {
-						message.author.send("Thanks! Now, please enter the body of the suggestion. Be as specfic as you like. But remember: The suggestion is up to the staff at the end.");
-						body = message.content;
-						if (body != null) {
-							message.author.send("And, tada! The suggestion *should* be posted! Thanks for the suggestion and we appreciate your feedback!")
-						}
-						var author = message.author;
-					}
-					var embed = new RichEmbed()
-						.setAuthor(message.author)
-						.setColor("#03ffee")
-						.addField(title)
-						.addField(body)
-						.setFooter(new Date() + `, suggested by ${message.author}`)
-					const channel = message.guild.channels.find('name', 'suggestions');
-					if (!channel) return;
-					message.channel.send({ embed });
-					break;
-				case "n":
-					message.author.send("Aborting.");
+    if (message.author.equals(client.user)) return;
 
+    if (!message.content.startsWith(prefix)) return;
+
+    var args = message.content.substring(prefix.length).split(" ");
+    var result = args.join(' ');
+    
+    switch (args[0]) {
+        //ping command
+        case "ping":
+            message.channel.send("pong!")
+            break;
 			}
-
-		} catch (ex) {
-
-		}
-	}
-
-});
-
-
-client.login(config.token).catch(function () {
-	console.log("[ERROR] Login failed.");
-});
+})
