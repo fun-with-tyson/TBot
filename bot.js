@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const client = new Discord.Client()
+const client = new Discord.Client();
+client.commands = new Discord.Collection();
 
  client.on('guildMemberAdd', member => {
 	const channel = member.guild.channels.find('name', 'welcomes-and-byes');
@@ -43,6 +44,44 @@ client.on("ready", () => {
     setGame();
     client.setInterval(setGame, 10000);
 })
+fs.readdir("./modules/commands/moderator/", (err, files) => {
+    if (err) console.error(err);
+
+    let modules = files.filter(f => f.split(".").pop() === "js");
+    modules.forEach((f, i) => {
+        let props = require(`./modules/commands/moderator/${f}`);
+        try {
+            client.commands.set(props.help.name, props);
+        } catch (err) {
+            console.log('One or more of your moderator commands caused an error. Check your moderator commands and try again. \n=> ' + err);
+            process.exit(1)
+        }
+    })
+})
+	
+fs.readdir("./modules/commands/", (err, files) => {
+    if (err) console.error(err);
+
+    let modules = files.filter(f => f.split(".").pop() === "js");
+    if (modules.length <= 0) {
+        console.log("No public commands found. Running with no public commands loaded.");
+        return;
+    }
+
+    console.log(`Now loading ${modules.length} public commands.`)
+    modules.forEach((f, i) => {
+        let props = require(`./modules/commands/${f}`);
+        try {
+            client.commands.set(props.help.name, props);
+        } catch (err) {
+            console.log('One or more of your public commands caused an error. Check your public commands and try again. \n=> ' + err);
+            process.exit(1)
+        }
+    })
+
+    console.log(`Finshed loading all ${modules.length} public commands.`)
+})
+
 
 client.on("message", function(message) {
     
@@ -54,31 +93,19 @@ client.on("message", function(message) {
 
     var args = message.content.substring(prefix.length).split(" ");
     var result = args.join(' ');
+    let cmd = client.commands.get(command.slice(prefix.length))
+
+    if (cmd) {
+        cmd.run(client, message, args);
+    }
+    
     
     switch (args[0]) {
         //ping command
         case "ping":
             message.channel.send("pong!")
             break;
-		//add "commnd, command 
-			case "help":
-			var embed = new Discord.RichEmbed()
-            .setAuthor("Help")
-            .setDescription("My Prefix is tbot;")
-            .addField("**Normal Commands**", "help, ping, purge, say, embedsay")
-            .setColor("#03ffee")
-           .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL)
-		   .setTimestamp()
-        message.author.send({ embed });
-		var embed = new Discord.RichEmbed()
-            .setAuthor("Help")
-            .setDescription("TBots prefix is tbot;")
-            .addField("**I have sent you a DM of all of TBots Commands**", "If the DM has not been sent please DM @Tyson or try the command agian")
-            .setColor("#03ffee")
-          .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL)
-		  .setTimestamp()
-        message.channel.send({ embed });
-		break;
+		
 		//Do Not Touch
 		case "purge":
 		const user = message.mentions.users.first();
@@ -121,5 +148,6 @@ try {
 		   .setTimestamp()
         message.author.send({ embed });
 					 
-			}
+            }
+    
 })
